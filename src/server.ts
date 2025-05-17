@@ -76,7 +76,12 @@ app.post('/chat', async function(req: Request, res: Response): Promise<any>{
             model: "gemini-2.0-flash",
             contents: message,
         });
-        const aiMessage = response.text;
+        let aiMessage: string = '';
+        if(!response.text){
+            aiMessage = 'No response from AI';
+        }else{
+            aiMessage = response.text;
+        }
         await db.insert(chats).values({userId, message, reply:aiMessage});
         const buggyTypeScriptObject = {
             name: 'AI Chat',
