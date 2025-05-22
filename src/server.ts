@@ -51,7 +51,6 @@ app.post('/register-user', async function(req: Request, res: Response): Promise<
     }catch(error){
         res.status(500).json({error:'Internal Server Error!'});
     };
-    res.status(200).json({message: 'Win !'});
 });
 
 app.post('/chat', async function(req: Request, res: Response): Promise<any>{
@@ -106,11 +105,10 @@ app.post('/get-messages', async function(req: Request, res: Response): Promise<a
         .select()
         .from(chats)
         .where(eq(chats.userId, userId));
-
         res.status(200).json({messages:chatHistory});
-
     }catch(error){
         console.log(error);
+        res.status(500).json({error:'Internal error'});
     }
 });
 
